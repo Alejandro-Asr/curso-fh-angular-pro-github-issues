@@ -9,19 +9,21 @@ export const getIssueCommentsByNumber = async (
   issueNumber: string
 ): Promise<GitHubIssue[]> => {
   await sleep(1500);
+
   try {
     const resp = await fetch(`${BASE_URL}/issues/${issueNumber}/comments`, {
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
       },
     });
-    if (!resp.ok) {
-      throw new Error('Can not load comments issues');
-    }
+
+    if (!resp.ok) throw "Can't load issues";
+
     const issues: GitHubIssue[] = await resp.json();
+    console.log({ issues });
 
     return issues;
   } catch (error) {
-    throw new Error('Can not load comments issues');
+    throw "Can't load issues";
   }
 };
